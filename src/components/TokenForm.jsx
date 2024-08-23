@@ -2,47 +2,46 @@ import React, { useState } from 'react';
 import { TextField, Button, Grid, Box } from '@mui/material';
 
 const TokenForm = ({ onGenerate, onClear }) => {
-  const [blueTokenCount, setBlueTokenCount] = useState(0);
+  const [blueTokenCount, setBlueTokenCount] = useState('');
   const [blueTokenPrefix, setBlueTokenPrefix] = useState('');
-  const [blueTokensPerRow, setBlueTokensPerRow] = useState(0);
-  const [redTokenCount, setRedTokenCount] = useState(0);
+  const [blueTokensPerRow, setBlueTokensPerRow] = useState('');
+  const [redTokenCount, setRedTokenCount] = useState('');
   const [redTokenPrefix, setRedTokenPrefix] = useState('');
-  const [redTokensPerRow, setRedTokensPerRow] = useState(0);
+  const [redTokensPerRow, setRedTokensPerRow] = useState('');
 
   const [errors, setErrors] = useState({});
 
   const validate = () => {
     const newErrors = {};
-    if (blueTokenCount <= 0) {
+    if (blueTokenCount === '' || parseInt(blueTokenCount, 10) <= 0) {
       newErrors.blueTokenCount = 'Number of Blue Tokens must be greater than 0';
     }
     if (!blueTokenPrefix.trim()) {
       newErrors.blueTokenPrefix = 'Prefix for Blue Tokens is required';
     }
-    if (blueTokensPerRow <= 0) {
+    if (blueTokensPerRow === '' || parseInt(blueTokensPerRow, 10) <= 0) {
       newErrors.blueTokensPerRow = 'Blue Tokens per Row must be greater than 0';
     }
-    if (redTokenCount <= 0) {
+    if (redTokenCount === '' || parseInt(redTokenCount, 10) <= 0) {
       newErrors.redTokenCount = 'Number of Red Tokens must be greater than 0';
     }
     if (!redTokenPrefix.trim()) {
       newErrors.redTokenPrefix = 'Prefix for Red Tokens is required';
     }
-    if (redTokensPerRow <= 0) {
+    if (redTokensPerRow === '' || parseInt(redTokensPerRow, 10) <= 0) {
       newErrors.redTokensPerRow = 'Red Tokens per Row must be greater than 0';
     }
     return newErrors;
   };
 
   const handleClear = () => {
-    setBlueTokenCount(0);
+    setBlueTokenCount('');
     setBlueTokenPrefix('');
-    setBlueTokensPerRow(0);
-    setRedTokenCount(0);
+    setBlueTokensPerRow('');
+    setRedTokenCount('');
     setRedTokenPrefix('');
-    setRedTokensPerRow(0);
+    setRedTokensPerRow('');
     setErrors({});
-
     onClear();
   };
 
@@ -50,13 +49,14 @@ const TokenForm = ({ onGenerate, onClear }) => {
     const newErrors = validate();
     if (Object.keys(newErrors).length === 0) {
       onGenerate({
-        blueTokenCount,
+        blueTokenCount: parseInt(blueTokenCount, 10),
         blueTokenPrefix,
-        blueTokensPerRow,
-        redTokenCount,
+        blueTokensPerRow: parseInt(blueTokensPerRow, 10),
+        redTokenCount: parseInt(redTokenCount, 10),
         redTokenPrefix,
-        redTokensPerRow,
+        redTokensPerRow: parseInt(redTokensPerRow, 10),
       });
+      setErrors({});
     } else {
       setErrors(newErrors);
     }
@@ -71,7 +71,7 @@ const TokenForm = ({ onGenerate, onClear }) => {
               label="Number of Blue Tokens"
               type="number"
               value={blueTokenCount}
-              onChange={(e) => setBlueTokenCount(parseInt(e.target.value))}
+              onChange={(e) => setBlueTokenCount(e.target.value)}
               fullWidth
               variant="outlined"
               error={!!errors.blueTokenCount}
@@ -94,7 +94,7 @@ const TokenForm = ({ onGenerate, onClear }) => {
               label="Blue Tokens per Row"
               type="number"
               value={blueTokensPerRow}
-              onChange={(e) => setBlueTokensPerRow(parseInt(e.target.value))}
+              onChange={(e) => setBlueTokensPerRow(e.target.value)}
               fullWidth
               variant="outlined"
               error={!!errors.blueTokensPerRow}
@@ -106,7 +106,7 @@ const TokenForm = ({ onGenerate, onClear }) => {
               label="Number of Red Tokens"
               type="number"
               value={redTokenCount}
-              onChange={(e) => setRedTokenCount(parseInt(e.target.value))}
+              onChange={(e) => setRedTokenCount(e.target.value)}
               fullWidth
               variant="outlined"
               error={!!errors.redTokenCount}
@@ -129,7 +129,7 @@ const TokenForm = ({ onGenerate, onClear }) => {
               label="Red Tokens per Row"
               type="number"
               value={redTokensPerRow}
-              onChange={(e) => setRedTokensPerRow(parseInt(e.target.value))}
+              onChange={(e) => setRedTokensPerRow(e.target.value)}
               fullWidth
               variant="outlined"
               error={!!errors.redTokensPerRow}
