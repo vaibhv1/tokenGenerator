@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import TokenForm from './components/TokenForm';
 import TokenDisplay from './components/TokenDisplay';
 import { Container } from '@mui/material';
-
+import Header from './components/Header';
 function App() {
   const [blueTokens, setBlueTokens] = useState([]);
   const [redTokens, setRedTokens] = useState([]);
@@ -48,11 +48,16 @@ function App() {
   };
 
   return (
-    <Container sx={{ marginTop: '16px' }}>
+    <>
+    <Header style={{marginBottom:'150px'}}/>
+   <div>
+     <Container sx={{ marginTop: '16px' }}>
       <TokenForm onGenerate={handleGenerate} onClear={handleClear} />
       <TokenDisplay tokens={blueTokens} tokensPerRow={blueTokensPerRow} />
       <TokenDisplay tokens={redTokens} tokensPerRow={redTokensPerRow} />
     </Container>
+   </div>
+    </>
   );
 }
 
